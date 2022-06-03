@@ -14,8 +14,16 @@ const getLocalStorage = () => {
   return [];
 };
 
+const getStorageTheme = () => {
+  let theme = 'dark-theme';
+  if (localStorage.getItem('theme')) {
+    theme = localStorage.getItem('theme');
+  }
+  return theme;
+};
+
 const App = () => {
-  const [theme, setTheme] = useState('light-theme');
+  const [theme, setTheme] = useState(getStorageTheme);
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [taskName, setTaskName] = useState('');
   const [list, setList] = useState(getLocalStorage());
@@ -30,6 +38,7 @@ const App = () => {
 
   useEffect(() => {
     document.documentElement.className = theme;
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
   useEffect(() => {

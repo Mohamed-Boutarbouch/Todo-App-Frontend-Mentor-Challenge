@@ -1,10 +1,22 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import FilterButtons from './FilterButtons';
+import useWindowSize from '../hooks/useWindowSize';
 
 const TaskController = ({ tasks, setList, setFilteredTasks }) => {
+  const { width } = useWindowSize();
+  const [renderControl, setRenderControl] = useState(false);
+
+  useEffect(() => {
+    if (width > 600) {
+      setRenderControl(true);
+    } else if (width < 600) {
+      setRenderControl(false);
+    }
+  }, [width]);
+
   const [taskCounter, setTaskCounter] = useState(tasks.length);
   const [taskStatus, setTaskStatus] = useState('All');
 
@@ -42,21 +54,37 @@ const TaskController = ({ tasks, setList, setFilteredTasks }) => {
     setTaskCounter(itemsLeft);
   }, [tasks]);
 
+  // console.log(width);
+  // let renderFilters;
+
+  // if (width > 600) {
+  //   renderFilters = false;
+  // } else if (width < 600) {
+  //   renderFilters = true;
+  // }
+  // console.log(renderFilters);
+
   return (
-    <div className="control">
-      <div className="task-counter">
-        <p>
-          <span>{taskCounter}&nbsp;</span>
-          {taskCounter === 1 ? 'item left' : 'items left'}
-        </p>
+    <Fragment>
+      <div className="control">
+        <div className="task-counter">
+          <p>
+            <span>{taskCounter}&nbsp;</span>
+            {taskCounter === 1 ? 'item left' : 'items left'}
+          </p>
+        </div>
+        {renderControl && <FilterButtons statusHandler={statusHandler} />}
+        <div className="delete-completed">
+          <button className="delete-btn" onClick={deleteCompletedHandler}>
+            clear completed
+          </button>
+        </div>
       </div>
-      <FilterButtons statusHandler={statusHandler} />
-      <div className="delete-completed">
-        <button className="delete-btn" onClick={deleteCompletedHandler}>
-          clear completed
-        </button>
+
+      <div className="control-mobile">
+        <FilterButtons statusHandler={statusHandler} />
       </div>
-    </div>
+    </Fragment>
   );
 };
 

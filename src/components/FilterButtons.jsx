@@ -10,7 +10,11 @@ const FilterButtons = ({ statusHandler }) => {
   return (
     <div onClick={statusHandler} className="filters">
       {buttonFilters.map((button) => (
-        <button className={active === button ? 'active' : ''} onClick={() => setActive(button)}>
+        <button
+          key={button}
+          className={active === button ? 'active' : ''}
+          onClick={() => setActive(button)}
+        >
           {button}
         </button>
       ))}

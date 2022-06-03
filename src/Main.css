@@ -27,6 +27,8 @@
   --filter-button-color: hsl(236, 9%, 61%);
   --filter-button-color-hover: hsl(235, 19%, 35%);
   --button-border: hsl(236, 33%, 92%);
+  --bg-image-desktop: url('./images/bg-desktop-light.jpg');
+  --bg-image-mobile: url('./images/bg-mobile-light.jpg');
 }
 
 .dark-theme {
@@ -36,7 +38,10 @@
   --filter-button-color: hsl(234, 11%, 52%);
   --filter-button-color-hover: hsl(236, 33%, 92%);
   --button-border: hsl(233, 14%, 35%);
+  --bg-image-desktop: url('./images/bg-desktop-dark.jpg');
+  --bg-image-mobile: url('./images/bg-mobile-dark.jpg');
 }
+
 html {
   font-size: 62.5%;
   box-sizing: border-box;
@@ -54,8 +59,15 @@ body {
   font-family: 'Josefin Sans', sans-serif;
   line-height: 1.3;
   background-color: var(--bg-color);
-  background-image: url('./images/bg-desktop-dark.jpg');
+  background-image: var(--bg-image-mobile);
+  background-size: 100% 65%;
   background-repeat: no-repeat;
+}
+
+@media screen and (min-width: 600px) {
+  body {
+    background-image: var(--bg-image-desktop);
+  }
 }
 
 .section-center {
@@ -65,11 +77,17 @@ body {
 }
 
 .container {
-  min-width: 50rem;
+  min-width: 38rem;
+}
+
+@media screen and (min-width: 600px) {
+  .container {
+    min-width: 52rem;
+
+  }
 }
 
 .header {
-
   display: flex;
   justify-content: space-between;
 
@@ -91,7 +109,6 @@ body {
   cursor: pointer;
   align-self: center;
 }
-
 
 .todo-form {
   margin-bottom: 2rem;
@@ -181,7 +198,8 @@ body {
 }
 
 .todo-list .task-checkbox:checked {
-  background: url(images/icon-check.svg), linear-gradient(to right,hsl(192, 100%, 67%) , hsl(280, 87%, 65%));
+  background: url(images/icon-check.svg),
+    linear-gradient(to right, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
   background-repeat: no-repeat;
   background-position: center;
   border: none;
@@ -199,7 +217,7 @@ body {
   transition: all 180ms ease-out;
 }
 
-.todo-list .task-checkbox:checked~.task-name {
+.todo-list .task-checkbox:checked ~ .task-name {
   text-decoration: line-through;
   color: var(--filter-button-color);
 }
@@ -257,6 +275,10 @@ body {
   display: flex;
 }
 
+.control.filters {
+  background: red;
+}
+
 .filters button {
   background-color: transparent;
   border: none;
@@ -267,7 +289,7 @@ body {
   cursor: pointer;
   text-transform: capitalize;
   padding: 0.2rem;
-  margin: 0.5rem;
+  margin: 1.5rem;
 }
 
 .filters button:hover {
@@ -276,4 +298,35 @@ body {
 
 .filters .active {
   color: hsl(220, 98%, 61%);
+}
+
+.control-mobile {
+  display: none;
+  margin-top: 2rem;
+  width: 100%;
+  height: 5rem;
+  background-color: var(--bg-form-color);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 12px 30px 5px rgba(0, 0, 0, 0.5);
+}
+
+/*
+.control-mobile {
+  display: block;
+}
+*/
+.control-mobile.filters {
+  display: block;
+}
+@media screen and (min-width: 600px) {
+  .control-mobile {
+    display: none;
+  }
+  .filters button {
+    margin: 0.5rem;
+  }
 }
